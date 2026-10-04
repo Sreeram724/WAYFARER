@@ -392,9 +392,14 @@ function wireChatbotEvents() {
       typingIndicator.remove();
       const errMsg = document.createElement("div");
       errMsg.className = "chat-msg bot";
-      errMsg.innerHTML = `<span style="color:#a13a2c;">I'm momentarily having trouble connecting. You can explore all our packages on the <a href="packages.html" style="text-decoration:underline;">Packages Page</a>.</span>`;
+      errMsg.innerHTML = `
+        <span style="color:#a13a2c;display:block;margin-bottom:6px;">⚠️ <strong>Connection Notice</strong>: Unable to reach the Wayfarer backend.</span>
+        <span style="font-size:12.5px;color:var(--grey-text);display:block;margin-bottom:8px;">Please verify your local server is running by typing <code>npm run dev</code> in your terminal.</span>
+        <a href="packages.html" style="font-size:13px;color:var(--teal);text-decoration:underline;">Explore Tour Packages directly &rarr;</a>
+      `;
       container.appendChild(errMsg);
     }
+
 
     container.scrollTop = container.scrollHeight;
   }
