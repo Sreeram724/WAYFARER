@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 52" width="160" height="52">
+  <rect width="160" height="52" rx="8" fill="#ffffff" stroke="#dadce0" stroke-width="1.5"/>
+  <g transform="translate(18, 10)">
+    <!-- Bank Pediment / Roof -->
+    <polygon points="18,0 0,8 36,8" fill="#0f7a5f"/>
+    <!-- Architrave -->
+    <rect x="2" y="9" width="32" height="2" fill="#0f7a5f"/>
+    <!-- 4 Pillars -->
+    <rect x="4" y="12" width="4" height="14" fill="#0f7a5f"/>
+    <rect x="12" y="12" width="4" height="14" fill="#0f7a5f"/>
+    <rect x="20" y="12" width="4" height="14" fill="#0f7a5f"/>
+    <rect x="28" y="12" width="4" height="14" fill="#0f7a5f"/>
+    <!-- Base -->
+    <rect x="0" y="27" width="36" height="3" rx="1" fill="#0f7a5f"/>
+    
+    <!-- Vector 'Net Banking' Text -->
+    <path fill="#1B365D" d="M46 8h3l5.5 12V8h2.8v16h-3l-5.5-12v12H46V8z"/>
+    <path fill="#1B365D" d="M64 16.5h6.5v2.2H64v3.5h7.2v2.3h-10V8h9.8v2.3H64v3.8h0v2.4z"/>
+    <path fill="#1B365D" d="M78 10.3h-4V8h11v2.3h-4.2V24H78V10.3z"/>
+    <path fill="#0f7a5f" d="M92 8h5.2c3 0 4.8 1.4 4.8 3.6 0 1.5-.9 2.7-2.3 3.1 1.7.4 2.8 1.7 2.8 3.5 0 2.4-2 3.8-5.1 3.8H92V8zm2.8 6.2h2.2c1.3 0 2-.6 2-1.6s-.7-1.6-2-1.6h-2.2v3.2zm0 7.3h2.4c1.4 0 2.2-.7 2.2-1.8 0-1.1-.8-1.8-2.2-1.8h-2.4v3.6z"/>
+  </g>
+</svg>

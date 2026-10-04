@@ -1,0 +1,22 @@
+{
+  "name": "wayfarer-travel",
+  "version": "1.0.0",
+  "description": "Wayfarer - South India tour packages site with Express + SQLite backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "sync:mongo": "node db/sync-mongo.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^18.0.4",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "mongoose": "^9.10.4",
+    "nodemailer": "^10.0.12",
+    "razorpay": "^2.9.8",
+    "sharp": "^0.35.5"
+  }
+}

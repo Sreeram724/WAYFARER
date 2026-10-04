@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Official Booking Voucher & Travel Slip — Wayfarer</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background:#f4f3ee;">
+
+<div id="header-mount"></div>
+
+<!-- Top Actions Bar -->
+<div class="voucher-actions" style="max-width:860px;margin:30px auto 0;display:flex;justify-content:space-between;align-items:center;padding:0 10px;">
+  <a href="my-bookings.html" class="link-teal" style="font-weight:600;">&larr; Back to My Bookings</a>
+  <div style="display:flex;gap:12px;">
+    <button type="button" class="btn btn-outline" id="slip-btn-email" style="font-size:13.5px;padding:9px 18px;">
+      ✉️ Email Slip
+    </button>
+    <button type="button" class="btn btn-primary" id="slip-btn-print" style="font-size:13.5px;padding:9px 20px;">
+      🖨️ Download / Print PDF
+    </button>
+  </div>
+</div>
+
+<div class="form-msg" id="slip-email-msg" style="max-width:860px;margin:12px auto 0;"></div>
+
+<!-- Main Printable Voucher -->
+<div class="voucher-shell" id="printable-voucher">
+
+  <!-- Voucher Header -->
+  <div class="voucher-header">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+        <img src="assets/wayfarer-logo-white.svg" alt="Wayfarer" style="height:32px;">
+      </div>
+      <h1>CONFIRMED TRAVEL VOUCHER</h1>
+      <p>Official Booking Slip & Day-Wise Itinerary</p>
+    </div>
+    <div class="voucher-ref-card">
+      <div style="font-size:11px;color:#a3c7bd;text-transform:uppercase;letter-spacing:0.05em;">BOOKING REFERENCE</div>
+      <div class="ref-num" id="slip-ref">WF-2026-0000</div>
+      <div style="margin-top:4px;">
+        <span class="voucher-stamp" style="border-color:#8fd8bd;color:#8fd8bd;font-size:11px;padding:2px 8px;">CONFIRMED &amp; PAID</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Voucher Body -->
+  <div class="voucher-body">
+
+    <!-- Customer & Reservation Overview -->
+    <div class="voucher-section-title">1. Traveler & Reservation Details</div>
+    <div class="voucher-grid-2">
+      <div class="voucher-info-item">
+        <strong>Customer Name</strong>
+        <span id="slip-customer-name">—</span>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Email &amp; Contact Number</strong>
+        <span id="slip-customer-contact">—</span>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Number of Travelers</strong>
+        <span id="slip-travelers">—</span>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Booking Issue Date</strong>
+        <span id="slip-booking-date">—</span>
+      </div>
+    </div>
+
+    <!-- Package & Journey Details -->
+    <div class="voucher-section-title">2. Package & Transit Schedule</div>
+    <div class="voucher-grid-2">
+      <div class="voucher-info-item">
+        <strong>Tour Package Name</strong>
+        <span id="slip-package-name" style="font-weight:700;color:var(--teal-dark);">—</span>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Destination &amp; Category</strong>
+        <span id="slip-destination">—</span>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Travel Start Date</strong>
+        <span id="slip-start-date">—</span>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Return / End Date</strong>
+        <span id="slip-end-date">—</span>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Pickup Point &amp; Time</strong>
+        <span id="slip-pickup">—</span>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Drop-off Point &amp; Est. Arrival</strong>
+        <span id="slip-dropoff">—</span>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Total Travel Hours (Estimated)</strong>
+        <span id="slip-travel-hours">—</span>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Hotel / Accommodation</strong>
+        <span id="slip-accommodation">—</span>
+      </div>
+    </div>
+
+    <!-- Assigned Certified Tour Guide (Requirement 10) -->
+    <div class="voucher-section-title">3. Assigned Certified Tour Guide</div>
+    <div class="voucher-grid-2" style="background:#f4f9f6;border:1px solid #cce5da;border-radius:8px;padding:14px 18px;margin-top:10px;">
+      <div class="voucher-info-item">
+        <strong>Tour Guide Name</strong>
+        <span id="slip-guide-name" style="font-weight:700;color:var(--teal-dark);">Arun Nair (Certified Guide)</span>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Guide Phone / WhatsApp</strong>
+        <span id="slip-guide-phone">+91 98471 22334</span>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Guide Email Address</strong>
+        <span id="slip-guide-email">arun.nair@wayfarer.travel</span>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Languages Known &amp; Experience</strong>
+        <span id="slip-guide-lang">English, Malayalam, Hindi · 8+ Years Experience</span>
+      </div>
+    </div>
+
+    <!-- Day-Wise Travel Itinerary -->
+    <div class="voucher-section-title">4. Day-Wise Travel Itinerary &amp; Sightseeing</div>
+    <div id="slip-itinerary-container" style="margin-top:14px;">
+      <!-- Populated via JS -->
+    </div>
+
+    <!-- Payment & Transaction Details -->
+    <div class="voucher-section-title">4. Verified Payment Transaction Summary</div>
+    <div class="voucher-grid-2">
+      <div class="voucher-info-item">
+        <strong>Transaction ID</strong>
+        <code id="slip-txn-id" style="font-size:14px;color:var(--teal-dark);font-weight:700;">—</code>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Payment Method</strong>
+        <span id="slip-payment-method">—</span>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Payment Status</strong>
+        <span style="color:#0f7a5f;font-weight:700;">VERIFIED &amp; COMPLETED</span>
+      </div>
+      <div class="voucher-info-item">
+        <strong>Total Amount Paid (Incl. 5% GST)</strong>
+        <span id="slip-amount-paid" style="font-size:18px;font-weight:700;color:var(--teal);">₹0</span>
+      </div>
+    </div>
+
+    <!-- Agency & Support Details -->
+    <div class="voucher-section-title">5. Travel Agency &amp; 24x7 Assistance</div>
+    <div class="voucher-grid-2" style="font-size:13.5px;color:var(--grey-text);">
+      <div>
+        <strong style="color:var(--ink);">Wayfarer Tours &amp; Travels Pvt. Ltd.</strong>
+        42 Palm Grove Road, Fort Kochi, Kerala - 682001, India<br>
+        Agency Registration No: IND-KER-2026-TRV-8941
+      </div>
+      <div>
+        <strong style="color:var(--ink);">Emergency Travel Desk (24x7)</strong>
+        Hotline: <strong>+91 98765 43210</strong><br>
+        Email: <strong>hello@wayfarer.travel</strong> · Web: <strong>www.wayfarer.travel</strong>
+      </div>
+    </div>
+
+    <div style="background:#fbfaf7;border:1px solid #eee;border-radius:6px;padding:12px 16px;margin-top:20px;font-size:12px;color:var(--grey-text);line-height:1.5;">
+      <strong>Important Travel Instructions:</strong> Please present a valid Government ID (Aadhaar / Passport / Driving License) upon hotel check-in and pickup. Your designated tour chauffeur details and vehicle registration will be dispatched via SMS / WhatsApp 12 hours prior to scheduled departure.
+    </div>
+
+  </div>
+
+  <!-- Voucher Footer -->
+  <div class="voucher-footer">
+    <div>
+      Authorized Signature: <span style="font-family:'Caveat',cursive;font-size:22px;color:var(--teal);margin-left:8px;">Wayfarer Travels</span>
+    </div>
+    <div>
+      Generated Automatically · Valid Travel Document
+    </div>
+  </div>
+
+</div>
+
+<div id="footer-mount"></div>
+
+<script src="js/main.js"></script>
+<script src="js/booking-slip.js"></script>
+</body>
+</html>

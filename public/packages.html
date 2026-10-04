@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tour packages across South & North India — Wayfarer</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="header-mount"></div>
+
+<section class="hero" style="min-height:320px;background-image:url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=1600&auto=format&fit=crop');">
+  <div class="container">
+    <div class="hero-eyebrow">📍 CURATED JOURNEYS ACROSS INDIA</div>
+    <h1 style="font-size:38px;">Handcrafted Tour Packages</h1>
+    <p>Curated itineraries with transparent pricing, verified accommodation, and dedicated travel support across South India and popular North India circuits.</p>
+    <div class="hero-actions">
+      <a href="destinations.html" class="btn btn-white">Browse by destination</a>
+      <a href="book.html" class="btn btn-outline" style="color:#fff;border-color:#fff;">Start a Booking</a>
+    </div>
+  </div>
+</section>
+
+<section style="background:#fbfaf7;padding:50px 0 90px;">
+  <div class="container">
+    <div class="section-head" style="margin-bottom:30px;">
+      <div class="eyebrow">Choose your escape</div>
+      <h2>Handcrafted Tour Packages</h2>
+      <p>Every trip includes daily detailed itineraries, verified accommodation, dedicated private transport, and transparent pricing with instant booking.</p>
+    </div>
+
+    <!-- Search, Filter & Sort Toolbar -->
+    <div class="packages-toolbar-card">
+      <div class="packages-toolbar-top">
+        <div class="pkg-search-box">
+          <span class="pkg-search-icon">🔍</span>
+          <input type="text" id="pkg-search-input" placeholder="Search by destination, package, temple, backwaters..." aria-label="Search packages">
+          <button type="button" class="pkg-search-clear" id="pkg-search-clear" aria-label="Clear search">&times;</button>
+        </div>
+        <div class="pkg-sort-box">
+          <label for="pkg-sort-select">Sort by:</label>
+          <select id="pkg-sort-select">
+            <option value="featured">Featured & Trending</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+            <option value="rating">Top Rated</option>
+            <option value="duration">Duration: Short to Long</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-bar" id="filter-bar" role="tablist">
+        <button type="button" class="filter-chip active" data-category="" data-region="" role="tab">All <span class="chip-count" id="count-all">16</span></button>
+        <button type="button" class="filter-chip" data-region="South India" role="tab">South India <span class="chip-count" id="count-south">13</span></button>
+        <button type="button" class="filter-chip" data-region="North India" role="tab">North India <span class="chip-count" id="count-north">3</span></button>
+        <button type="button" class="filter-chip" data-category="Hill Station" role="tab">Hill Stations <span class="chip-count" id="count-hills">6</span></button>
+        <button type="button" class="filter-chip" data-category="Backwaters" role="tab">Backwaters <span class="chip-count" id="count-backwaters">2</span></button>
+        <button type="button" class="filter-chip" data-category="Heritage" role="tab">Heritage <span class="chip-count" id="count-heritage">7</span></button>
+        <button type="button" class="filter-chip" data-category="Beach" role="tab">Beaches <span class="chip-count" id="count-beaches">1</span></button>
+      </div>
+    </div>
+
+    <!-- Status Line -->
+    <div class="packages-status-line" id="packages-status-line">
+      <span>Showing <strong id="packages-showing-count">16</strong> handcrafted packages</span>
+      <button type="button" class="btn-reset-filters" id="btn-reset-filters" style="display:none;">Clear all filters</button>
+    </div>
+
+    <!-- Packages Grid -->
+    <div class="grid-3" id="packages-grid">
+      <!-- Skeleton cards will be injected initially -->
+    </div>
+  </div>
+</section>
+
+<!-- Day-by-Day Itinerary Quick View Modal -->
+<div class="modal-overlay" id="itinerary-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="itinerary-modal">
+    <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">&times;</button>
+    <div class="modal-header-hero">
+      <img id="modal-img" src="" alt="Package hero">
+      <div class="modal-header-content">
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#8fd8bd;margin-bottom:4px;" id="modal-eyebrow">DESTINATION</div>
+        <h3 style="font-size:24px;color:#fff;margin:0 0 6px;" id="modal-title">Package Name</h3>
+        <div style="font-size:13.5px;color:#e6e4df;display:flex;gap:14px;flex-wrap:wrap;" id="modal-meta">
+          <span id="modal-duration">⏱ 5N/6D</span>
+          <span id="modal-rating">★ 4.9</span>
+          <span id="modal-season">Best: Sep–Mar</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:14.5px;color:var(--ink);line-height:1.55;margin-bottom:18px;" id="modal-desc">
+        Package description goes here.
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;" id="modal-tags">
+        <!-- Highlights pills -->
+      </div>
+
+      <h4 style="font-size:18px;margin-bottom:14px;border-bottom:1px solid #eee;padding-bottom:8px;">Day-by-Day Detailed Itinerary</h4>
+      <div class="modal-itinerary-timeline" id="modal-timeline">
+        <!-- Days injected here -->
+      </div>
+
+      <div class="modal-info-box" id="modal-info-box">
+        <!-- Accommodation & logistics injected here -->
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div>
+        <div style="font-size:11px;color:var(--grey-text);text-transform:uppercase;">Price per traveler</div>
+        <div style="font-size:22px;font-weight:800;color:var(--teal);" id="modal-price">₹13,999</div>
+      </div>
+      <a href="#" class="btn btn-primary" id="modal-book-btn" style="padding:10px 24px;font-size:14.5px;">Book This Trip &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<div class="cta-band">
+  <div class="container">
+    <div class="eyebrow">Found your trip?</div>
+    <h2>Ready to book your escape?</h2>
+    <p>Complete your booking details and checkout securely via UPI or cards with official confirmation.</p>
+    <div class="cta-actions">
+      <a href="book.html" class="btn btn-white">Start booking</a>
+      <a href="contact.html" class="btn btn-outline" style="color:#fff;border-color:#fff;">Talk to us</a>
+    </div>
+  </div>
+</div>
+
+<div id="footer-mount"></div>
+
+<script src="js/main.js"></script>
+<script src="js/packages.js"></script>
+</body>
+</html>

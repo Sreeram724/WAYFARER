@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking & Payment Confirmed — Wayfarer</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background:#f7f5ef;">
+
+<div id="header-mount"></div>
+
+<main class="container" style="padding-top:40px;padding-bottom:80px;">
+
+  <div id="conf-loading" style="text-align:center;padding:60px 0;">
+    <p>Verifying booking confirmation and generating travel voucher…</p>
+  </div>
+
+  <div id="conf-content" style="display:none;">
+    <div class="confirmation-box">
+      <div class="success-icon-badge">✓</div>
+      <div class="eyebrow" style="color:var(--teal-dark);">Payment Verified & Booking Confirmed</div>
+      <h1 style="font-size:34px;margin-bottom:8px;">You're Ready to Travel!</h1>
+      <p style="font-size:15px;color:var(--grey-text);max-width:520px;margin:0 auto 16px;">
+        Thank you for choosing Wayfarer. Your tour reservation is confirmed and your official travel voucher has been issued.
+      </p>
+
+      <div>
+        <span style="font-size:13px;color:var(--grey-text);display:block;margin-bottom:4px;">OFFICIAL BOOKING ID</span>
+        <div class="booking-ref-badge" id="conf-booking-id">WF-2026-0000</div>
+      </div>
+
+      <!-- Payment & Travel Receipt Details -->
+      <table class="confirmation-details-table">
+        <tr>
+          <td>Selected Package</td>
+          <td><strong id="conf-package-name">—</strong></td>
+        </tr>
+        <tr>
+          <td>Destination</td>
+          <td id="conf-destination">—</td>
+        </tr>
+        <tr>
+          <td>Travel Dates</td>
+          <td id="conf-dates">—</td>
+        </tr>
+        <tr>
+          <td>Number of Travelers</td>
+          <td id="conf-travelers">—</td>
+        </tr>
+        <tr>
+          <td>Pickup Location & Time</td>
+          <td id="conf-pickup">—</td>
+        </tr>
+        <tr>
+          <td>Payment Transaction ID</td>
+          <td><code id="conf-txn-id" style="font-size:14px;color:var(--teal-dark);font-weight:700;">—</code></td>
+        </tr>
+        <tr>
+          <td>Payment Method</td>
+          <td id="conf-payment-method">—</td>
+        </tr>
+        <tr>
+          <td>Amount Paid</td>
+          <td><strong style="font-size:18px;color:var(--teal);" id="conf-amount-paid">₹0</strong> <span style="font-size:12px;color:#0f7a5f;font-weight:600;">(Verified & Paid in Full)</span></td>
+        </tr>
+      </table>
+
+      <!-- Action Buttons -->
+      <div class="confirmation-actions">
+        <a href="#" class="btn btn-primary" id="btn-view-slip">
+          📄 View & Print Booking Slip
+        </a>
+        <button type="button" class="btn btn-outline" id="btn-email-slip">
+          ✉️ Email Confirmation Slip
+        </button>
+        <a href="my-bookings.html" class="btn btn-outline">
+          My Bookings
+        </a>
+      </div>
+
+      <div class="form-msg" id="conf-email-msg" style="margin-top:20px;"></div>
+    </div>
+  </div>
+
+</main>
+
+<div id="footer-mount"></div>
+
+<script src="js/main.js"></script>
+<script src="js/confirmation.js"></script>
+</body>
+</html>

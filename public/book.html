@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Your Tour Package — Wayfarer</title>
+<link rel="icon" type="image/svg+xml" href="assets/wayfarer-logo.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="header-mount"></div>
+
+<!-- Wizard Header with Stepper -->
+<div class="wizard-header">
+  <div class="container text-center">
+    <div class="eyebrow">Trip Reservation</div>
+    <h2>Book Your Journey</h2>
+    <p>Follow our simple 3-step reservation process to customize your travel preferences.</p>
+
+    <div class="wizard-stepper">
+      <div class="stepper-item active" id="step-indicator-1">
+        <div class="stepper-circle">1</div>
+        <div class="stepper-title">Select Package</div>
+      </div>
+      <div class="stepper-item" id="step-indicator-2">
+        <div class="stepper-circle">2</div>
+        <div class="stepper-title">Travel Details</div>
+      </div>
+      <div class="stepper-item" id="step-indicator-3">
+        <div class="stepper-circle">3</div>
+        <div class="stepper-title">Review & Summary</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section style="padding:50px 0 90px;background:#fbfaf7;">
+  <div class="container">
+    <div class="booking-wizard-grid">
+
+      <!-- Left Column: Step Content -->
+      <div class="wizard-card">
+
+        <!-- STEP 1: Select Package -->
+        <div class="step-pane active" id="pane-step-1">
+          <div style="margin-bottom:20px;">
+            <div class="eyebrow">Step 1 of 3 · Trip Reservation</div>
+            <h3 style="font-size:26px;margin-bottom:6px;">Choose Your Travel Package</h3>
+            <p style="font-size:14px;color:var(--grey-text);margin-bottom:18px;">
+              Review your package details below, or use the selector to switch to another handcrafted tour.
+            </p>
+
+            <div class="package-selector-bar">
+              <label for="package-selector">Selected Package:</label>
+              <div class="package-select-control">
+                <select id="package-selector" aria-label="Selected Travel Package"></select>
+              </div>
+            </div>
+          </div>
+
+          <div id="package-showcase-mount">
+            <p>Loading package details…</p>
+          </div>
+
+          <div style="display:flex;justify-content:flex-end;margin-top:28px;">
+            <button type="button" class="btn btn-primary" id="btn-to-step-2">Continue to Travel Details &rarr;</button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Enter Travel Details -->
+        <div class="step-pane" id="pane-step-2">
+          <div class="eyebrow">Step 2 of 3</div>
+          <h3 style="font-size:24px;margin-bottom:6px;">Enter Guest & Travel Details</h3>
+          <p style="font-size:14px;color:var(--grey-text);margin-bottom:24px;">Please provide contact information, dates, and transit locations for your itinerary.</p>
+
+          <form id="traveler-details-form">
+            <div class="field-row">
+              <div class="field">
+                <label for="traveler-name">Full Name *</label>
+                <input type="text" id="traveler-name" placeholder="Arun Kumar" required>
+              </div>
+              <div class="field">
+                <label for="traveler-email">Email Address *</label>
+                <input type="email" id="traveler-email" placeholder="arun@example.com" required>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="traveler-phone">Contact Phone / WhatsApp *</label>
+                <input type="tel" id="traveler-phone" placeholder="+91 98765 43210" required>
+              </div>
+              <div class="field">
+                <label for="travel-start-date">Travel Start Date *</label>
+                <input type="date" id="travel-start-date" required>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="travel-end-date">Return / End Date *</label>
+                <input type="date" id="travel-end-date" required>
+              </div>
+              <div class="field">
+                <label for="num-adults">Number of Adults (12+ yrs) *</label>
+                <select id="num-adults">
+                  <option value="1">1 Adult</option>
+                  <option value="2" selected>2 Adults</option>
+                  <option value="3">3 Adults</option>
+                  <option value="4">4 Adults</option>
+                  <option value="5">5 Adults</option>
+                  <option value="6">6+ Adults</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="num-children">Number of Children (under 12 yrs)</label>
+                <select id="num-children">
+                  <option value="0" selected>0 Children</option>
+                  <option value="1">1 Child</option>
+                  <option value="2">2 Children</option>
+                  <option value="3">3 Children</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="num-rooms">Number of Rooms</label>
+                <select id="num-rooms">
+                  <option value="1" selected>1 Room (Double Sharing)</option>
+                  <option value="2">2 Rooms</option>
+                  <option value="3">3 Rooms</option>
+                  <option value="4">4+ Rooms</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="pickup-location">Pickup Location *</label>
+                <input type="text" id="pickup-location" placeholder="e.g. Cochin Airport (COK) or Hotel" required>
+              </div>
+              <div class="field">
+                <label for="drop-location">Drop-off Location *</label>
+                <input type="text" id="drop-location" placeholder="e.g. Cochin Airport (COK) or Railway Station" required>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="pickup-time">Preferred Pickup Time</label>
+                <select id="pickup-time">
+                  <option value="07:00 AM">07:00 AM (Early Morning)</option>
+                  <option value="09:00 AM" selected>09:00 AM (Standard)</option>
+                  <option value="11:00 AM">11:00 AM</option>
+                  <option value="01:30 PM">01:30 PM (Afternoon)</option>
+                  <option value="05:00 PM">05:00 PM (Evening)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="special-requests">Special Requests / Preferences</label>
+                <input type="text" id="special-requests" placeholder="e.g. Vegetarian meals, high floor room, infant seat">
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;margin-top:24px;">
+              <button type="button" class="btn btn-outline" id="btn-back-to-step-1">&larr; Back to Package</button>
+              <button type="submit" class="btn btn-primary" id="btn-to-step-3">Review Booking Summary &rarr;</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- STEP 3: Display Booking Summary -->
+        <div class="step-pane" id="pane-step-3">
+          <div class="eyebrow">Step 3 of 3</div>
+          <h3 style="font-size:24px;margin-bottom:6px;">Booking Summary & Review</h3>
+          <p style="font-size:14px;color:var(--grey-text);margin-bottom:24px;">Please review your trip itinerary and price breakdown before continuing to payment.</p>
+
+          <div id="step-3-summary-mount">
+            <!-- Dynamic summary content -->
+          </div>
+
+          <div class="form-msg" id="wizard-error-msg" role="alert"></div>
+
+          <div style="display:flex;justify-content:space-between;margin-top:32px;">
+            <button type="button" class="btn btn-outline" id="btn-back-to-step-2">&larr; Edit Details</button>
+            <button type="button" class="btn btn-primary" id="btn-proceed-payment">Continue to Payment &rarr;</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Sticky Live Price Card -->
+      <div>
+        <div class="order-summary-card">
+          <div class="eyebrow" style="color:var(--teal);">Price Summary</div>
+          <h3 id="sidebar-pkg-title">Kerala Signature Tour</h3>
+
+          <div class="price-breakdown-row">
+            <span>Duration</span>
+            <strong id="sidebar-duration">5N / 6D</strong>
+          </div>
+          <div class="price-breakdown-row">
+            <span>Destination</span>
+            <strong id="sidebar-dest">Alleppey & Munnar</strong>
+          </div>
+          <div class="price-breakdown-row">
+            <span>Travelers</span>
+            <strong id="sidebar-travelers">2 Adults</strong>
+          </div>
+
+          <hr style="border:none;border-top:1px solid #e1ded6;margin:16px 0;">
+
+          <div class="price-breakdown-row">
+            <span id="label-adult-price">Adults Fare (2 x ₹24,999)</span>
+            <span id="val-adult-price">₹49,998</span>
+          </div>
+          <div class="price-breakdown-row" id="row-child-price" style="display:none;">
+            <span id="label-child-price">Children Fare</span>
+            <span id="val-child-price">₹0</span>
+          </div>
+          <div class="price-breakdown-row">
+            <span>Subtotal</span>
+            <span id="val-subtotal">₹49,998</span>
+          </div>
+          <div class="price-breakdown-row" id="row-book-discount" style="display:none;color:#0f7a5f;font-weight:600;">
+            <span>Coupon Discount (<span id="book-coupon-code">CODE</span>)</span>
+            <span id="val-discount">-₹0</span>
+          </div>
+          <div class="price-breakdown-row">
+            <span>GST & Tourism Taxes (5%)</span>
+            <span id="val-tax">₹2,500</span>
+          </div>
+
+          <!-- Coupon Input in Booking Sidebar -->
+          <div class="coupon-section">
+            <label style="font-size:12px;font-weight:700;color:var(--ink);display:block;text-transform:uppercase;">Apply Coupon Code</label>
+            <div class="coupon-input-group">
+              <input type="text" id="book-coupon-input" placeholder="e.g. WAYFARER25">
+              <button type="button" class="coupon-apply-btn" id="btn-book-apply-coupon">Apply</button>
+            </div>
+            <div class="coupon-chips-list">
+              <span class="coupon-chip-tag" data-code="WAYFARER25">🏷️ WAYFARER25 (25% off)</span>
+              <span class="coupon-chip-tag" data-code="SOUTHINDIA">🏷️ SOUTHINDIA (₹2000 off)</span>
+              <span class="coupon-chip-tag" data-code="EXPLORE">🏷️ EXPLORE (15% off)</span>
+            </div>
+            <div id="book-coupon-status"></div>
+          </div>
+
+          <div class="price-breakdown-row total">
+            <span>Total Payable</span>
+            <span class="amt" id="val-grand-total">₹52,498</span>
+          </div>
+
+          <div style="margin-top:20px;font-size:12.5px;color:var(--grey-text);line-height:1.4;">
+            ✓ Transparent pricing with no hidden charges<br>
+            ✓ 100% verified payment confirmation<br>
+            ✓ Official printable itinerary slip included
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+
+<script src="js/main.js"></script>
+<script src="js/book.js"></script>
+</body>
+</html>

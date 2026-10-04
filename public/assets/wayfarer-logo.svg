@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 56" role="img" aria-label="Wayfarer Luxury Travel">
+  <defs>
+    <linearGradient id="wfEmeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f7a5f"/>
+      <stop offset="100%" stop-color="#074e3c"/>
+    </linearGradient>
+    <linearGradient id="wfGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5d77f"/>
+      <stop offset="50%" stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#aa8214"/>
+    </linearGradient>
+    <linearGradient id="wfRingGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0f7a5f" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#d4af37" stop-opacity="0.6"/>
+    </linearGradient>
+    <filter id="wfGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f7a5f" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <!-- Brand Emblem / Compass Star -->
+  <g transform="translate(6, 6)" filter="url(#wfGlow)">
+    <!-- Outer Precision Ring -->
+    <circle cx="22" cy="22" r="21" fill="#f4faf7" stroke="url(#wfRingGrad)" stroke-width="1.5"/>
+    <circle cx="22" cy="22" r="17.5" fill="none" stroke="#d5e8df" stroke-width="0.75" stroke-dasharray="2 3"/>
+
+    <!-- Cardinal Marks -->
+    <path d="M22 2v4M22 38v4M2 22h4M38 22h4" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/>
+
+    <!-- Compass 8-Point Star Facets -->
+    <!-- North -->
+    <polygon points="22,6 25,22 22,20" fill="url(#wfGoldGrad)"/>
+    <polygon points="22,6 19,22 22,20" fill="#aa8214"/>
+    <!-- South -->
+    <polygon points="22,38 25,22 22,24" fill="#074e3c"/>
+    <polygon points="22,38 19,22 22,24" fill="url(#wfEmeraldGrad)"/>
+    <!-- East -->
+    <polygon points="38,22 22,25 24,22" fill="#aa8214"/>
+    <polygon points="38,22 22,19 24,22" fill="url(#wfGoldGrad)"/>
+    <!-- West -->
+    <polygon points="6,22 22,25 20,22" fill="url(#wfEmeraldGrad)"/>
+    <polygon points="6,22 22,19 20,22" fill="#074e3c"/>
+
+    <!-- Secondary Diagonal Points -->
+    <polygon points="33,11 22,22 25,20" fill="#0f7a5f" opacity="0.8"/>
+    <polygon points="11,33 22,22 19,24" fill="#0f7a5f" opacity="0.8"/>
+    <polygon points="33,33 22,22 24,25" fill="#d4af37" opacity="0.8"/>
+    <polygon points="11,11 22,22 20,19" fill="#d4af37" opacity="0.8"/>
+
+    <!-- Central Gem Core -->
+    <circle cx="22" cy="22" r="3.2" fill="#ffffff" stroke="url(#wfGoldGrad)" stroke-width="1.2"/>
+    <circle cx="22" cy="22" r="1.2" fill="#0f7a5f"/>
+  </g>
+
+  <!-- Luxury Typography -->
+  <text x="64" y="32" font-family="'Playfair Display', Georgia, serif" font-size="24" font-weight="700" letter-spacing="0.14em" fill="#14221d">WAYFARER</text>
+  <text x="65" y="44" font-family="'Inter', -apple-system, sans-serif" font-size="7.5" font-weight="700" letter-spacing="0.32em" fill="#0f7a5f">BESPOKE JOURNEYS &#8226; INDIA</text>
+</svg>

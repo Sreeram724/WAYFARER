@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Operations Center — Wayfarer</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.kpi-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+  transition: transform 0.2s ease;
+}
+.kpi-card:hover {
+  transform: translateY(-2px);
+}
+.kpi-val {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.kpi-label {
+  font-size: 13px;
+  color: var(--grey-text);
+  font-weight: 500;
+}
+.guide-select-inline {
+  padding: 6px 10px;
+  font-size: 12.5px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  max-width: 170px;
+}
+[data-theme="dark"] .guide-select-inline {
+  background: #141c18;
+  border-color: #293830;
+  color: #f2f5f3;
+}
+</style>
+</head>
+<body style="background:#f9f8f4;">
+
+<div id="header-mount"></div>
+
+<div class="container admin-shell" id="admin-view" style="padding-top:40px;padding-bottom:90px;display:block;">
+
+  <!-- Dashboard Top Header -->
+  <div class="section-head" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:24px;">
+    <div>
+      <div class="eyebrow" style="color:var(--teal-dark);">Operations &amp; Command Center</div>
+      <h2 style="font-size:32px;margin:0 0 6px;">Wayfarer Admin Dashboard</h2>
+      <p style="margin:0;font-size:14px;color:var(--grey-text);">Manage real-time bookings, tour guides, registered users, package catalog, and traveler feedback.</p>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <a href="packages.html" class="btn btn-outline" target="_blank">Live Catalog &nearr;</a>
+      <button type="button" class="btn btn-outline" id="logout-btn">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- Database Connectivity Status Banner -->
+  <div id="mongo-status-banner" style="margin-bottom:20px;padding:12px 18px;background:#f0faf6;border:1px solid #cce8de;border-radius:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13.5px;">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <span id="mongo-status-dot" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;"></span>
+      <span id="mongo-status-text" style="font-weight:600;color:#064e3b;">MongoDB Database Connected</span>
+      <span id="mongo-status-detail" style="color:#047857;font-size:12.5px;">(wayfarer cluster)</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span id="mongo-sync-status" style="color:var(--grey-text);font-size:12.5px;">Dual-Write Active</span>
+      <button type="button" class="btn btn-outline" id="btn-sync-mongo" style="font-size:12px;padding:5px 12px;border-color:#10b981;color:#064e3b;cursor:pointer;">🔄 Sync to MongoDB</button>
+    </div>
+  </div>
+
+  <!-- KPI Overview Stat Cards (Requirement 13) -->
+  <div class="kpi-grid" id="stats-grid">
+    <div class="kpi-card"><div class="kpi-val" id="stat-total-bookings">0</div><div class="kpi-label">Total Bookings</div></div>
+    <div class="kpi-card"><div class="kpi-val" id="stat-confirmed-bookings" style="color:var(--teal);">0</div><div class="kpi-label">Confirmed Bookings</div></div>
+    <div class="kpi-card"><div class="kpi-val" id="stat-pending-bookings" style="color:#b27d14;">0</div><div class="kpi-label">Pending Bookings</div></div>
+    <div class="kpi-card"><div class="kpi-val" id="stat-completed-bookings" style="color:#0f7a5f;">0</div><div class="kpi-label">Completed Tours</div></div>
+    <div class="kpi-card"><div class="kpi-val" id="stat-total-revenue" style="color:var(--teal);font-size:24px;">₹0</div><div class="kpi-label">Total Verified Revenue</div></div>
+    <div class="kpi-card"><div class="kpi-val" id="stat-total-users">0</div><div class="kpi-label">Registered Travelers</div></div>
+    <div class="kpi-card"><div class="kpi-val" id="stat-total-guides" style="color:var(--teal);">0</div><div class="kpi-label">Certified Tour Guides</div></div>
+    <div class="kpi-card"><div class="kpi-val" id="stat-total-packages">0</div><div class="kpi-label">Active Packages</div></div>
+  </div>
+
+  <!-- Admin Navigation Tabs -->
+  <div class="admin-tabs" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
+    <div class="admin-tab active" data-tab="bookings">📋 Bookings Management</div>
+    <div class="admin-tab" data-tab="guides">🧭 Tour Guides</div>
+    <div class="admin-tab" data-tab="users">👥 Registered Users</div>
+    <div class="admin-tab" data-tab="suggestions">💬 Suggestions &amp; Feedback</div>
+    <div class="admin-tab" data-tab="packages">📦 Packages Catalog</div>
+    <div class="admin-tab" data-tab="destinations">📍 Destinations</div>
+    <div class="admin-tab" data-tab="popularity">📊 Popularity &amp; KPIs</div>
+    <div class="admin-tab" data-tab="payments">💳 Transactions</div>
+  </div>
+
+  <!-- ================= TAB 1: BOOKING MANAGEMENT ================= -->
+  <div class="admin-panel show" id="panel-bookings">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:12px;">
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <input type="text" id="bookings-search" placeholder="Search by traveler, email, or Booking ID…" style="padding:9px 14px;border:1px solid var(--border);border-radius:6px;width:280px;font-size:13.5px;">
+        <select id="bookings-status-filter" style="padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:13.5px;">
+          <option value="">All Statuses</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="pending">Pending</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+        <button type="button" class="btn btn-outline" id="btn-refresh-bookings" style="font-size:13px;padding:8px 14px;">🔄 Refresh</button>
+      </div>
+      <div style="font-size:13.5px;color:var(--grey-text);" id="bookings-count-label">Loading bookings…</div>
+    </div>
+
+    <div style="overflow-x:auto;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Booking ID</th>
+            <th>Customer Details</th>
+            <th>Package &amp; Dest</th>
+            <th>Dates &amp; Persons</th>
+            <th>Total Amount</th>
+            <th>Payment Status</th>
+            <th>Tour Status</th>
+            <th>Assigned Guide</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="bookings-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ================= TAB 2: TOUR GUIDE MANAGEMENT (Requirement 10) ================= -->
+  <div class="admin-panel" id="panel-guides">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:12px;">
+      <div>
+        <h3 style="font-size:20px;margin:0 0 4px;">Certified Tour Guides Directory</h3>
+        <p style="font-size:13.5px;color:var(--grey-text);margin:0;">Manage certified guides, track their active tour assignments, and update contact credentials.</p>
+      </div>
+      <button class="btn btn-primary" id="btn-add-guide">+ Add New Tour Guide</button>
+    </div>
+
+    <div style="overflow-x:auto;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Guide Details</th>
+            <th>Contact Info</th>
+            <th>Experience</th>
+            <th>Languages Spoken</th>
+            <th>Assigned Circuit / Dest</th>
+            <th>Active Tours</th>
+            <th>Availability</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="guides-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ================= TAB 3: USER MANAGEMENT (Requirement 13) ================= -->
+  <div class="admin-panel" id="panel-users">
+    <div style="margin-bottom:18px;">
+      <h3 style="font-size:20px;margin:0 0 4px;">Registered Travelers &amp; User Accounts</h3>
+      <p style="font-size:13.5px;color:var(--grey-text);margin:0;">Registered platform accounts, roles, booking counts, and cumulative lifetime tour spending.</p>
+    </div>
+
+    <div style="overflow-x:auto;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Traveler Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Account Role</th>
+            <th>Registered Date</th>
+            <th>Total Bookings</th>
+            <th>Total Spent</th>
+          </tr>
+        </thead>
+        <tbody id="users-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ================= TAB 4: SUGGESTIONS & FEEDBACK (Requirement 12) ================= -->
+  <div class="admin-panel" id="panel-suggestions">
+    <div style="margin-bottom:18px;">
+      <h3 style="font-size:20px;margin:0 0 4px;">Customer Suggestions, Feedback &amp; Complaints</h3>
+      <p style="font-size:13.5px;color:var(--grey-text);margin:0;">Real-time inquiries and feedback submitted by travelers from their dashboard.</p>
+    </div>
+
+    <div style="overflow-x:auto;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Category</th>
+            <th>Traveler Name</th>
+            <th>Email Contact</th>
+            <th>Message / Suggestion</th>
+            <th>Date &amp; Time</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="suggestions-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ================= TAB 5: PACKAGES CATALOG ================= -->
+  <div class="admin-panel" id="panel-packages">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:12px;">
+      <h3 style="font-size:20px;margin:0;">Tour Packages Catalog</h3>
+      <button class="btn btn-primary" id="add-package-btn">+ Add New Package</button>
+    </div>
+    <div style="overflow-x:auto;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Package</th>
+            <th>Destination</th>
+            <th>Duration</th>
+            <th>Adult Price</th>
+            <th>Child Price</th>
+            <th>Rating</th>
+            <th>Badges</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="packages-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ================= TAB 6: DESTINATIONS ================= -->
+  <div class="admin-panel" id="panel-destinations">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:12px;">
+      <h3 style="font-size:20px;margin:0;">Featured Destinations</h3>
+      <button class="btn btn-primary" id="add-destination-btn">+ Add Destination</button>
+    </div>
+    <div style="overflow-x:auto;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Destination</th>
+            <th>Region</th>
+            <th>Category</th>
+            <th>Tagline</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="destinations-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ================= TAB 7: POPULARITY & STATISTICS ================= -->
+  <div class="admin-panel" id="panel-popularity">
+    <div style="margin-bottom:18px;">
+      <h3 style="font-size:20px;margin:0 0 4px;">Package Booking Statistics &amp; Popularity</h3>
+      <p style="font-size:13.5px;color:var(--grey-text);margin:0;">Breakdown of bookings volume and revenue generated per package.</p>
+    </div>
+    <div style="overflow-x:auto;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Package Name</th>
+            <th>Category</th>
+            <th>Base Price</th>
+            <th>Total Bookings</th>
+            <th>Popularity Meter</th>
+            <th>Total Revenue</th>
+          </tr>
+        </thead>
+        <tbody id="popularity-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ================= TAB 8: PAYMENT TRANSACTIONS ================= -->
+  <div class="admin-panel" id="panel-payments">
+    <div style="margin-bottom:18px;">
+      <h3 style="font-size:20px;margin:0 0 4px;">Verified Payment Records</h3>
+      <p style="font-size:13.5px;color:var(--grey-text);margin:0;">Authenticated transactions persisted in SQLite database.</p>
+    </div>
+    <div style="overflow-x:auto;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Transaction ID</th>
+            <th>Booking ID</th>
+            <th>Customer</th>
+            <th>Payment Method</th>
+            <th>Gateway</th>
+            <th>Amount Paid</th>
+            <th>Paid At</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="payments-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= MODAL: COMPLETE BOOKING DETAILS (Requirement 9) ================= -->
+<div class="modal-backdrop" id="booking-detail-modal">
+  <div class="modal" style="width:720px;max-width:94vw;max-height:90vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:14px;margin-bottom:18px;">
+      <div>
+        <div class="eyebrow" style="color:var(--teal);">Complete Booking Record</div>
+        <h3 style="margin:0;" id="modal-detail-ref">Booking WF-2026-0000</h3>
+      </div>
+      <button type="button" class="icon-btn" id="modal-detail-close" style="font-size:16px;">&times; Close</button>
+    </div>
+
+    <div id="booking-detail-content"></div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:24px;border-top:1px solid var(--border);padding-top:18px;flex-wrap:wrap;gap:10px;">
+      <div id="modal-booking-actions" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+      <a href="#" class="btn btn-primary" id="modal-btn-slip" target="_blank">View Official Slip &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODAL: ADD / EDIT TOUR GUIDE (Requirement 10) ================= -->
+<div class="modal-backdrop" id="guide-modal">
+  <div class="modal" style="width:580px;max-width:92vw;max-height:90vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:12px;">
+      <h3 id="guide-modal-title" style="margin:0;">Add Certified Tour Guide</h3>
+      <button type="button" class="icon-btn" id="guide-modal-close">&times; Close</button>
+    </div>
+    <form id="guide-form">
+      <input type="hidden" id="guide-id">
+      <div class="field-row">
+        <div class="field"><label>Guide Full Name *</label><input type="text" id="guide-name" placeholder="Arun Nair" required></div>
+        <div class="field"><label>Phone Number *</label><input type="tel" id="guide-phone" placeholder="+91 98471 22334" required></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Email Address</label><input type="email" id="guide-email" placeholder="arun.nair@wayfarer.travel"></div>
+        <div class="field"><label>Experience</label><input type="text" id="guide-experience" placeholder="e.g. 8+ Years Certified"></div>
+      </div>
+      <div class="field"><label>Languages Known</label><input type="text" id="guide-languages" placeholder="e.g. English, Malayalam, Hindi, Tamil"></div>
+      <div class="field-row">
+        <div class="field"><label>Assigned Destination</label><input type="text" id="guide-destination" placeholder="e.g. Munnar, Alleppey, All South"></div>
+        <div class="field"><label>Availability Status</label>
+          <select id="guide-status">
+            <option value="available">Available</option>
+            <option value="on-tour">Currently On Tour</option>
+            <option value="leave">On Leave</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Address / Base Location</label><input type="text" id="guide-address" placeholder="e.g. Fort Kochi, Kerala"></div>
+      <div class="field"><label>Photo URL (Optional)</label><input type="text" id="guide-photo" placeholder="assets/avatars/avatar2.jpg"></div>
+
+      <div class="modal-actions" style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
+        <button type="button" class="btn btn-outline" id="guide-cancel">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="guide-submit-btn">Save Guide</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= MODAL: ADD / EDIT PACKAGE ================= -->
+<div class="modal-backdrop" id="package-modal">
+  <div class="modal" style="width:640px;max-width:92vw;max-height:90vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:12px;">
+      <h3 id="package-modal-title" style="margin:0;">Add Package</h3>
+      <button type="button" class="icon-btn" id="package-modal-close">&times; Close</button>
+    </div>
+    <form id="package-form">
+      <input type="hidden" id="pkg-id">
+      <div class="field"><label>Package Name *</label><input type="text" id="pkg-name" required></div>
+      <div class="field-row">
+        <div class="field"><label>Category *</label>
+          <select id="pkg-category">
+            <option>Hill Station</option><option>Beach</option><option>Heritage</option><option>Backwaters</option>
+          </select>
+        </div>
+        <div class="field"><label>Region</label>
+          <select id="pkg-region">
+            <option value="South India">South India</option>
+            <option value="North India">North India</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Destination Name</label><input type="text" id="pkg-destination" placeholder="e.g. Munnar"></div>
+        <div class="field"><label>Duration Label * (e.g. 3N/4D)</label><input type="text" id="pkg-duration-label" required></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Duration (days) *</label><input type="number" id="pkg-duration-days" required></div>
+        <div class="field"><label>Total Travel Hours</label><input type="number" id="pkg-travel-hours" placeholder="4"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Adult Price (₹) *</label><input type="number" id="pkg-price" required></div>
+        <div class="field"><label>Child Price (₹)</label><input type="number" id="pkg-child-price" placeholder="Half price"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Best Season</label><input type="text" id="pkg-season" placeholder="e.g. Oct-Feb"></div>
+        <div class="field"><label>Rating</label><input type="number" step="0.1" min="0" max="5" id="pkg-rating"></div>
+      </div>
+      <div class="field"><label>Highlights (comma separated)</label><input type="text" id="pkg-highlights"></div>
+      <div class="field"><label>Image URL</label><input type="text" id="pkg-image"></div>
+      <div class="field"><label>Pickup Locations</label><input type="text" id="pkg-pickup-locs" placeholder="e.g. Cochin Airport (COK), Ernakulam Junction"></div>
+      <div class="field"><label>Drop Locations</label><input type="text" id="pkg-drop-locs" placeholder="e.g. Cochin Airport (COK)"></div>
+      <div class="field"><label>Accommodation</label><input type="text" id="pkg-accommodation" placeholder="e.g. 4-Star Mountain View Resort"></div>
+      <div class="field"><label>Description</label><textarea id="pkg-description"></textarea></div>
+      <div class="field-row" style="display:flex;gap:20px;">
+        <label style="cursor:pointer;"><input type="checkbox" id="pkg-trending" style="width:auto;display:inline-block;margin-right:6px;"> Trending</label>
+        <label style="cursor:pointer;"><input type="checkbox" id="pkg-featured" style="width:auto;display:inline-block;margin-right:6px;"> Featured</label>
+      </div>
+      <div class="modal-actions" style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
+        <button type="button" class="btn btn-outline" id="package-cancel">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save Package</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= MODAL: ADD / EDIT DESTINATION ================= -->
+<div class="modal-backdrop" id="destination-modal">
+  <div class="modal" style="width:580px;max-width:92vw;max-height:90vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:12px;">
+      <h3 id="destination-modal-title" style="margin:0;">Add Destination</h3>
+      <button type="button" class="icon-btn" id="destination-modal-close">&times; Close</button>
+    </div>
+    <form id="destination-form">
+      <input type="hidden" id="dest-id">
+      <div class="field"><label>Name *</label><input type="text" id="dest-name" required></div>
+      <div class="field-row">
+        <div class="field"><label>Category *</label>
+          <select id="dest-category">
+            <option>Hill Stations</option><option>Beaches</option><option>Heritage</option><option>Backwaters</option>
+          </select>
+        </div>
+        <div class="field"><label>Region</label>
+          <select id="dest-region">
+            <option value="South India">South India</option>
+            <option value="North India">North India</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Tagline</label><input type="text" id="dest-tagline"></div>
+      <div class="field"><label>Image URL</label><input type="text" id="dest-image"></div>
+      <div class="field"><label>Description</label><textarea id="dest-description"></textarea></div>
+      <div class="modal-actions" style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
+        <button type="button" class="btn btn-outline" id="destination-cancel">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save Destination</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="footer-mount"></div>
+
+<script src="js/main.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

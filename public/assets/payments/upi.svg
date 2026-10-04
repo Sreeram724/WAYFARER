@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 52" width="160" height="52">
+  <rect width="160" height="52" rx="8" fill="#ffffff" stroke="#dadce0" stroke-width="1.5"/>
+  <g transform="translate(18, 10)">
+    <!-- UPI Triangle Arrows -->
+    <polygon points="0,32 15,0 24,0 9,32" fill="#00773C"/>
+    <polygon points="12,32 27,0 36,0 21,32" fill="#F37021"/>
+    
+    <!-- Vector UPI Letters -->
+    <!-- U -->
+    <path fill="#1B365D" d="M42 0h6.8v18.5c0 5 3.2 8.2 8.2 8.2s8.2-3.2 8.2-8.2V0H72v18.2c0 8.7-5.9 14.5-15 14.5s-15-5.8-15-14.5V0z"/>
+    <!-- P -->
+    <path fill="#1B365D" d="M78 0h12.5c6.8 0 11.2 4.1 11.2 10.3 0 6.3-4.4 10.4-11.2 10.4H84.8v11.3H78V0zm11.8 15.3c3.6 0 5.7-2.1 5.7-5 0-3-2.1-5-5.7-5H84.8v10h5z"/>
+    <!-- I -->
+    <path fill="#1B365D" d="M107 0h6.8v32h-6.8V0z"/>
+  </g>
+</svg>

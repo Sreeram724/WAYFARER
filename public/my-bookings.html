@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Tour Bookings — Wayfarer</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background:#f7f5ef;">
+
+<div id="header-mount"></div>
+
+<section style="padding:40px 0 90px;">
+  <div class="container" style="max-width:1100px;">
+    
+    <!-- Traveler Profile Banner -->
+    <div id="user-profile-mount" style="margin-bottom:32px;"></div>
+
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px;flex-wrap:wrap;gap:14px;">
+      <div>
+        <div class="eyebrow">Reservations &amp; Tours</div>
+        <h2 style="font-size:28px;margin:0 0 4px;">My Booked Tours &amp; Trips</h2>
+        <p style="font-size:14px;color:var(--grey-text);margin:0;">Track booking statuses, assigned tour guides, travel logistics, and download official itinerary slips.</p>
+      </div>
+      <div>
+        <a href="book.html" class="btn btn-primary">+ Book Another Trip</a>
+      </div>
+    </div>
+
+    <!-- Booking history container -->
+    <div id="bookings-history-mount">
+      <p style="text-align:center;padding:40px 0;font-size:15px;">Loading your bookings…</p>
+    </div>
+
+    <!-- Traveler Suggestion & Feedback Box (Requirement 12) -->
+    <div class="feedback-card" id="feedback-section">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+        <span style="font-size:24px;">💬</span>
+        <h3 style="font-size:22px;margin:0;">Traveler Suggestion &amp; Feedback Box</h3>
+      </div>
+      <p style="font-size:14px;color:var(--grey-text);margin-bottom:20px;">
+        We value your thoughts! Share suggestions, travel requirements, feedback, or complaints with our travel operations team. All submissions are monitored and resolved by our administration.
+      </p>
+
+      <form id="suggestion-form">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;">
+          <div class="field">
+            <label for="sugg-category" style="font-size:12.5px;font-weight:700;">Submission Type</label>
+            <select id="sugg-category" required style="width:100%;padding:10px 12px;font-size:13.5px;border:1px solid var(--border);border-radius:8px;">
+              <option value="suggestion">💡 Travel Suggestion</option>
+              <option value="feedback">⭐ Experience Feedback</option>
+              <option value="complaint">⚠️ Complaint / Grievance</option>
+              <option value="request">✈️ Special Travel Request</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="sugg-name" style="font-size:12.5px;font-weight:700;">Your Full Name</label>
+            <input type="text" id="sugg-name" placeholder="Full name" required style="width:100%;padding:10px 12px;font-size:13.5px;border:1px solid var(--border);border-radius:8px;">
+          </div>
+          <div class="field">
+            <label for="sugg-email" style="font-size:12.5px;font-weight:700;">Email Address</label>
+            <input type="email" id="sugg-email" placeholder="you@example.com" required style="width:100%;padding:10px 12px;font-size:13.5px;border:1px solid var(--border);border-radius:8px;">
+          </div>
+        </div>
+
+        <div class="field" style="margin-bottom:16px;">
+          <label for="sugg-message" style="font-size:12.5px;font-weight:700;">Message / Details</label>
+          <textarea id="sugg-message" rows="4" placeholder="Tell us how we can improve, what you loved, or any special arrangement you need for your tour…" required style="width:100%;padding:10px 12px;font-size:13.5px;border:1px solid var(--border);border-radius:8px;"></textarea>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+          <div id="suggestion-status-msg" style="font-size:13.5px;"></div>
+          <button type="submit" class="btn btn-primary" id="btn-submit-suggestion" style="padding:10px 24px;font-size:14px;">
+            Submit Feedback to Wayfarer &rarr;
+          </button>
+        </div>
+      </form>
+
+      <!-- Previous Submissions by User -->
+      <div id="user-suggestions-history" style="margin-top:24px;border-top:1px solid var(--border);padding-top:18px;display:none;">
+        <h4 style="font-size:16px;margin-bottom:10px;">Your Submitted Messages</h4>
+        <div id="user-suggestions-list"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+
+<script src="js/main.js"></script>
+<script src="js/my-bookings.js"></script>
+</body>
+</html>
